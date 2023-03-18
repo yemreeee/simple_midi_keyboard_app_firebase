@@ -1,6 +1,6 @@
 # simple_midi_keyboard_app_firebase
 
-A Flutter midi piano project powered with [Firebase](https://firebase.google.com/) and inspired by original[RodyDavis - Flutter Piano](https://github.com/rodydavis/flutter_piano/tree/5k).
+A Flutter midi piano project powered with [Firebase](https://firebase.google.com/) and inspired by original [RodyDavis - Flutter Piano](https://github.com/rodydavis/flutter_piano/tree/5k).
 
 In this project i added Firebase options to configure concurrently between installed apps such as changing theme, width, and scrolling options.
 
