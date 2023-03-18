@@ -1,16 +1,13 @@
 # simple_midi_keyboard_app_firebase
 
-A new Flutter project.
+A Flutter midi piano project powered with [Firebase](https://firebase.google.com/) and inspired by original[RodyDavis - Flutter Piano](https://github.com/rodydavis/flutter_piano/tree/5k).
 
-## Getting Started
+In this project i added Firebase options to configure concurrently between installed apps such as changing theme, width, and scrolling options.
 
-This project is a starting point for a Flutter application.
+For example when you installed apps in ios and android, you will change the settings in ios and see the result the another device(s). Some of images seeing below.
 
-A few resources to get you started if this is your first Flutter project:
+![Android](Screenshots/Screenshot_1.png)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Android](Screenshots/Screenshot_2.gif)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This project is purely for experimentation and learning the flutter architecture. I hope it interests you. By the way, thank you [Rody Davis](https://github.com/rodydavis).

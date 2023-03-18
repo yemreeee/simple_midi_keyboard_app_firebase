@@ -84,10 +84,6 @@ class _MidiPianoState extends State<MidiPiano>
     }
   }
 
-  ValueKey key(String keyName) {
-    return ValueKey(keyName);
-  }
-
   Color? changeColor(bool accidental) =>
       accidental ? _animationBlack.value : _animationWhite.value;
 
@@ -177,9 +173,9 @@ class _MidiPianoState extends State<MidiPiano>
                       trailing: Switch(
                           value: _showLabels,
                           onChanged: (bool value) {
+                            singleControl = 1;
                             db.runTransaction(
                               (transaction) async {
-                                singleControl = 1;
                                 return transaction.update(documentReference, {
                                   'allow_note': value,
                                   'single_control': singleControl
@@ -325,6 +321,10 @@ class _MidiPianoState extends State<MidiPiano>
 
 double roundUp(double value) {
   return (value * 1000).ceil() / 1000;
+}
+
+ValueKey key(String keyName) {
+  return ValueKey(keyName);
 }
 
 const BorderRadius borderRadius = BorderRadius.only(
