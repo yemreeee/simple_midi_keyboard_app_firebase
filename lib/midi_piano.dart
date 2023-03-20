@@ -246,10 +246,8 @@ class _MidiPianoState extends State<MidiPiano>
                     child: platform == TargetPlatform.iOS
                         ? MediaQuery.removePadding(
                             context: context,
-                            removeLeft:
-                                platform == TargetPlatform.iOS ? true : false,
-                            removeRight:
-                                platform == TargetPlatform.iOS ? true : false,
+                            removeLeft: true,
+                            removeRight: true,
                             child: listViewWidget(),
                           )
                         : listViewWidget()));
