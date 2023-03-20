@@ -19,9 +19,12 @@ class _MidiPianoState extends State<MidiPiano>
   initState() {
     _scrollController = ScrollController();
     // _scrollController.addListener(() async {
-    //   var offset = (_scrollController.offset * 1000).ceil() / 1000;
+    //   setState(() {
+    //     _offset = roundUp(_scrollController.offset);
+    //   });
+
     //   if (kDebugMode) {
-    //     print('Scroll Position $offset');
+    //     print('Scroll Position $_offset');
     //   }
     //   await Future.delayed(
     //     const Duration(seconds: 10),
@@ -198,66 +201,86 @@ class _MidiPianoState extends State<MidiPiano>
                             });
                           })),
                   const Divider(),
-                  const ListTile(title: Text("Change Keyboard Position")),
-                  Slider(
-                    activeColor: Colors.yellowAccent,
-                    inactiveColor: Colors.white,
-                    min: _scrollController.initialScrollOffset,
-                    max: _scrollController.hasClients
-                        ? roundUp(_scrollController.position.maxScrollExtent)
-                        : 4000.0,
-                    divisions: 100,
-                    value: _offset,
-                    onChanged: (value) {},
-                    onChangeEnd: (value) {
+                  // const ListTile(title: Text("Change Keyboard Position")),
+                  // Slider(
+                  //   activeColor: Colors.yellowAccent,
+                  //   inactiveColor: Colors.white,
+                  //   min: 0.0,
+                  //   max: 3372.0,
+                  //   divisions: 100,
+                  //   value: _offset,
+                  //   onChanged: (value) {},
+                  //   onChangeEnd: (value) {
+                  //     singleControl = 1;
+                  //     db.runTransaction((transaction) async => transaction
+                  //             .update(documentReference, {
+                  //           'offset': roundUp(value).toString(),
+                  //           'single_control': singleControl
+                  //         }));
+                  //   },
+                  // ),
+                ]))),
+                body: NotificationListener<ScrollNotification>(
+                  onNotification: (notification) {
+                    if (notification is ScrollUpdateNotification) {
+                      double value = roundUp(notification.metrics.pixels);
+                      // if (value > 3372) {
+                      //   value = 3372.0;
+                      // } else if (value < 0) {
+                      //   value = 0.0;
+                      // }
+                      // if (kDebugMode) {
+                      //   print('Scroll Ended $value');
+                      // }
                       singleControl = 1;
                       db.runTransaction((transaction) async => transaction
                               .update(documentReference, {
-                            'offset': roundUp(value).toString(),
+                            'offset': value.toString(),
                             'single_control': singleControl
                           }));
+                    }
+                    return true;
+                  },
+                  child: ListView.builder(
+                    itemCount: 7,
+                    scrollDirection: Axis.horizontal,
+                    controller: _scrollController,
+                    itemBuilder: (BuildContext context, int index) {
+                      final int i = index * 12;
+                      return SafeArea(
+                        child: Stack(children: [
+                          Row(mainAxisSize: MainAxisSize.min, children: [
+                            _buildKey(24 + i, false),
+                            _buildKey(26 + i, false),
+                            _buildKey(28 + i, false),
+                            _buildKey(29 + i, false),
+                            _buildKey(31 + i, false),
+                            _buildKey(33 + i, false),
+                            _buildKey(35 + i, false),
+                          ]),
+                          Positioned(
+                              left: 0.0,
+                              right: 0.0,
+                              bottom: 100,
+                              top: 0.0,
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(width: keyWidth * .5),
+                                    _buildKey(25 + i, true),
+                                    _buildKey(27 + i, true),
+                                    Container(width: keyWidth),
+                                    _buildKey(30 + i, true),
+                                    _buildKey(32 + i, true),
+                                    _buildKey(34 + i, true),
+                                    Container(width: keyWidth * .5),
+                                  ])),
+                        ]),
+                      );
                     },
                   ),
-                ]))),
-                body: ListView.builder(
-                  itemCount: 7,
-                  scrollDirection: Axis.horizontal,
-                  controller: _scrollController,
-                  itemBuilder: (BuildContext context, int index) {
-                    final int i = index * 12;
-                    return SafeArea(
-                      child: Stack(children: [
-                        Row(mainAxisSize: MainAxisSize.min, children: [
-                          _buildKey(24 + i, false),
-                          _buildKey(26 + i, false),
-                          _buildKey(28 + i, false),
-                          _buildKey(29 + i, false),
-                          _buildKey(31 + i, false),
-                          _buildKey(33 + i, false),
-                          _buildKey(35 + i, false),
-                        ]),
-                        Positioned(
-                            left: 0.0,
-                            right: 0.0,
-                            bottom: 100,
-                            top: 0.0,
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(width: keyWidth * .5),
-                                  _buildKey(25 + i, true),
-                                  _buildKey(27 + i, true),
-                                  Container(width: keyWidth),
-                                  _buildKey(30 + i, true),
-                                  _buildKey(32 + i, true),
-                                  _buildKey(34 + i, true),
-                                  Container(width: keyWidth * .5),
-                                ])),
-                      ]),
-                    );
-                  },
                 ));
           }
         });
@@ -320,7 +343,7 @@ class _MidiPianoState extends State<MidiPiano>
 }
 
 double roundUp(double value) {
-  return (value * 1000).ceil() / 1000;
+  return (value * 1).ceil() / 1;
 }
 
 ValueKey key(String keyName) {
