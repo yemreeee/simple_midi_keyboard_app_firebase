@@ -14,4 +14,22 @@ For example when you installed apps in ios and android, you will change the sett
 ## iOS
 ![iOS](Screenshots/Simulator%20Screen%20Shot%20-%20iOS.png) (I spent couple of hours to build because of firebase integration :sweat_smile:)
 
+
+## Firebase Data
+The JSON data you see below, you need to add your "cloudfirestore" collection. Collection name "midi_settings". I added random values.
+
+```json
+{
+    "allow_note":true,
+    "change_theme":true,
+    "note":50,
+    "offset":50,
+    "single_control":1,
+    "width":"0.0"
+}
+```
+
+## Warning!!!
+Due to firebase quota limit (free version), you may faced with the data streaming issue.
+
 This project is purely for experimentation and learning the flutter architecture. I hope it interests you. By the way, thank you [Rody Davis](https://github.com/rodydavis).
