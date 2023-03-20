@@ -241,45 +241,50 @@ class _MidiPianoState extends State<MidiPiano>
                     }
                     return true;
                   },
-                  child: ListView.builder(
-                    itemCount: 7,
-                    scrollDirection: Axis.horizontal,
-                    controller: _scrollController,
-                    itemBuilder: (BuildContext context, int index) {
-                      final int i = index * 12;
-                      return SafeArea(
-                        child: Stack(children: [
-                          Row(mainAxisSize: MainAxisSize.min, children: [
-                            _buildKey(24 + i, false),
-                            _buildKey(26 + i, false),
-                            _buildKey(28 + i, false),
-                            _buildKey(29 + i, false),
-                            _buildKey(31 + i, false),
-                            _buildKey(33 + i, false),
-                            _buildKey(35 + i, false),
+                  child: MediaQuery.removePadding(
+                    context: context,
+                    removeLeft: true,
+                    removeRight: true,
+                    child: ListView.builder(
+                      itemCount: 7,
+                      scrollDirection: Axis.horizontal,
+                      controller: _scrollController,
+                      itemBuilder: (BuildContext context, int index) {
+                        final int i = index * 12;
+                        return SafeArea(
+                          child: Stack(children: [
+                            Row(mainAxisSize: MainAxisSize.min, children: [
+                              _buildKey(24 + i, false),
+                              _buildKey(26 + i, false),
+                              _buildKey(28 + i, false),
+                              _buildKey(29 + i, false),
+                              _buildKey(31 + i, false),
+                              _buildKey(33 + i, false),
+                              _buildKey(35 + i, false),
+                            ]),
+                            Positioned(
+                                left: 0.0,
+                                right: 0.0,
+                                bottom: 100,
+                                top: 0.0,
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(width: keyWidth * .5),
+                                      _buildKey(25 + i, true),
+                                      _buildKey(27 + i, true),
+                                      Container(width: keyWidth),
+                                      _buildKey(30 + i, true),
+                                      _buildKey(32 + i, true),
+                                      _buildKey(34 + i, true),
+                                      Container(width: keyWidth * .5),
+                                    ])),
                           ]),
-                          Positioned(
-                              left: 0.0,
-                              right: 0.0,
-                              bottom: 100,
-                              top: 0.0,
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Container(width: keyWidth * .5),
-                                    _buildKey(25 + i, true),
-                                    _buildKey(27 + i, true),
-                                    Container(width: keyWidth),
-                                    _buildKey(30 + i, true),
-                                    _buildKey(32 + i, true),
-                                    _buildKey(34 + i, true),
-                                    Container(width: keyWidth * .5),
-                                  ])),
-                        ]),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ));
           }
