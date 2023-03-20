@@ -226,6 +226,7 @@ class _MidiPianoState extends State<MidiPiano>
                     onNotification: (notification) {
                       if (notification is ScrollEndNotification) {
                         double value = roundUp(notification.metrics.pixels);
+                        _offset = value;
                         // if (value > 3372) {
                         //   value = 3372.0;
                         // } else if (value < 0) {
@@ -319,8 +320,11 @@ class _MidiPianoState extends State<MidiPiano>
                     if (kDebugMode) {
                       print(key(accidental.toString()));
                     }
-                    return transaction.update(documentReference,
-                        {'note': midi, 'single_control': singleControl});
+                    return transaction.update(documentReference, {
+                      'note': midi,
+                      'single_control': singleControl,
+                      'offset': _offset
+                    });
                   }),
                 ))),
         Positioned(
