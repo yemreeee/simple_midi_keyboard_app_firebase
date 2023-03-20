@@ -12,6 +12,6 @@ For example when you installed apps in ios and android, you will change the sett
 ![Android](Screenshots/Screenshot_2.gif)
 
 ## iOS
-![iOS](Screenshots/Simulator%20Screen%20Shot%20-%20iOS.png) (I spend couple of hours to build because of firebase integration :sweat_smile:)
+![iOS](Screenshots/Simulator%20Screen%20Shot%20-%20iOS.png) (I spent couple of hours to build because of firebase integration :sweat_smile:)
 
 This project is purely for experimentation and learning the flutter architecture. I hope it interests you. By the way, thank you [Rody Davis](https://github.com/rodydavis).
