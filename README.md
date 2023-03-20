@@ -1,4 +1,4 @@
-# simple_midi_keyboard_app_firebase
+# Simple midi keyboard app with firebase
 
 A Flutter midi piano project powered with [Firebase](https://firebase.google.com/) and inspired by original [RodyDavis - Flutter Piano](https://github.com/rodydavis/flutter_piano/tree/5k).
 
@@ -6,10 +6,12 @@ In this project i added Firebase options to configure concurrently between insta
 
 For example when you installed apps in ios and android, you will change the settings in ios and see the result the another device(s). Some of images seeing below.
 
+## Android
 ![Android](Screenshots/Screenshot_1.png)
 
 ![Android](Screenshots/Screenshot_2.gif)
 
+## iOS
 ![iOS](Screenshots/Simulator%20Screen%20Shot%20-%20iOS.png) (I spend couple of hours to build because of firebase integration :sweat_smile:)
 
 This project is purely for experimentation and learning the flutter architecture. I hope it interests you. By the way, thank you [Rody Davis](https://github.com/rodydavis).
