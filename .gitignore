@@ -45,3 +45,6 @@ app.*.map.json
 
 GoogleService-Info.plist
 google-services.json
+.vscode/settings.json
+ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved
+macos/Podfile
