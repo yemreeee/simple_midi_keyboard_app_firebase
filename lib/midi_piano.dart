@@ -78,6 +78,7 @@ class _MidiPianoState extends State<MidiPiano>
   late AnimationController _controller;
   late FirebaseFirestore db;
   late DocumentReference<Object?> documentReference;
+  late TargetPlatform platform;
 
   void animateColor(bool toggle) {
     if (toggle) {
@@ -115,6 +116,7 @@ class _MidiPianoState extends State<MidiPiano>
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           } else {
+            platform = Theme.of(context).platform;
             var midi = snapshot.data!.docChanges.asMap()[0]!.doc.data()
                 as Map<String, dynamic>;
             _showLabels = midi['allow_note'];
@@ -221,74 +223,80 @@ class _MidiPianoState extends State<MidiPiano>
                   // ),
                 ]))),
                 body: NotificationListener<ScrollNotification>(
-                  onNotification: (notification) {
-                    if (notification is ScrollEndNotification) {
-                      double value = roundUp(notification.metrics.pixels);
-                      // if (value > 3372) {
-                      //   value = 3372.0;
-                      // } else if (value < 0) {
-                      //   value = 0.0;
-                      // }
-                      // if (kDebugMode) {
-                      //   print('Scroll Ended $value');
-                      // }
-                      singleControl = 1;
-                      db.runTransaction((transaction) async => transaction
-                              .update(documentReference, {
-                            'offset': value.toString(),
-                            'single_control': singleControl
-                          }));
-                    }
-                    return true;
-                  },
-                  child: MediaQuery.removePadding(
-                    context: context,
-                    removeLeft: true,
-                    removeRight: true,
-                    child: ListView.builder(
-                      itemCount: 7,
-                      scrollDirection: Axis.horizontal,
-                      controller: _scrollController,
-                      itemBuilder: (BuildContext context, int index) {
-                        final int i = index * 12;
-                        return SafeArea(
-                          child: Stack(children: [
-                            Row(mainAxisSize: MainAxisSize.min, children: [
-                              _buildKey(24 + i, false),
-                              _buildKey(26 + i, false),
-                              _buildKey(28 + i, false),
-                              _buildKey(29 + i, false),
-                              _buildKey(31 + i, false),
-                              _buildKey(33 + i, false),
-                              _buildKey(35 + i, false),
-                            ]),
-                            Positioned(
-                                left: 0.0,
-                                right: 0.0,
-                                bottom: 100,
-                                top: 0.0,
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Container(width: keyWidth * .5),
-                                      _buildKey(25 + i, true),
-                                      _buildKey(27 + i, true),
-                                      Container(width: keyWidth),
-                                      _buildKey(30 + i, true),
-                                      _buildKey(32 + i, true),
-                                      _buildKey(34 + i, true),
-                                      Container(width: keyWidth * .5),
-                                    ])),
-                          ]),
-                        );
-                      },
-                    ),
-                  ),
-                ));
+                    onNotification: (notification) {
+                      if (notification is ScrollEndNotification) {
+                        double value = roundUp(notification.metrics.pixels);
+                        // if (value > 3372) {
+                        //   value = 3372.0;
+                        // } else if (value < 0) {
+                        //   value = 0.0;
+                        // }
+                        // if (kDebugMode) {
+                        //   print('Scroll Ended $value');
+                        // }
+                        singleControl = 1;
+                        db.runTransaction((transaction) async => transaction
+                                .update(documentReference, {
+                              'offset': value.toString(),
+                              'single_control': singleControl
+                            }));
+                      }
+                      return true;
+                    },
+                    child: platform == TargetPlatform.iOS
+                        ? MediaQuery.removePadding(
+                            context: context,
+                            removeLeft:
+                                platform == TargetPlatform.iOS ? true : false,
+                            removeRight:
+                                platform == TargetPlatform.iOS ? true : false,
+                            child: listViewWidget(),
+                          )
+                        : listViewWidget()));
           }
         });
+  }
+
+  ListView listViewWidget() {
+    return ListView.builder(
+      itemCount: 7,
+      scrollDirection: Axis.horizontal,
+      controller: _scrollController,
+      itemBuilder: (BuildContext context, int index) {
+        final int i = index * 12;
+        return SafeArea(
+          child: Stack(children: [
+            Row(mainAxisSize: MainAxisSize.min, children: [
+              _buildKey(24 + i, false),
+              _buildKey(26 + i, false),
+              _buildKey(28 + i, false),
+              _buildKey(29 + i, false),
+              _buildKey(31 + i, false),
+              _buildKey(33 + i, false),
+              _buildKey(35 + i, false),
+            ]),
+            Positioned(
+                left: 0.0,
+                right: 0.0,
+                bottom: 100,
+                top: 0.0,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(width: keyWidth * .5),
+                      _buildKey(25 + i, true),
+                      _buildKey(27 + i, true),
+                      Container(width: keyWidth),
+                      _buildKey(30 + i, true),
+                      _buildKey(32 + i, true),
+                      _buildKey(34 + i, true),
+                      Container(width: keyWidth * .5),
+                    ])),
+          ]),
+        );
+      },
+    );
   }
 
   Widget _buildKey(int midi, bool accidental) {
