@@ -15,7 +15,7 @@ For example when you installed apps in ios and android, you will change the sett
 ![iOS](Screenshots/Simulator%20Screen%20Shot%20-%20iOS.png) (I spent couple of hours to build because of firebase integration :sweat_smile:)
 
 
-## Firebase Data
+## Cloud FireStore Data
 The JSON data you see below, you need to add your "cloudfirestore" collection. Collection name "midi_settings". I added random values.
 
 ```json
