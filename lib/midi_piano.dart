@@ -222,7 +222,7 @@ class _MidiPianoState extends State<MidiPiano>
                 ]))),
                 body: NotificationListener<ScrollNotification>(
                   onNotification: (notification) {
-                    if (notification is ScrollUpdateNotification) {
+                    if (notification is ScrollEndNotification) {
                       double value = roundUp(notification.metrics.pixels);
                       // if (value > 3372) {
                       //   value = 3372.0;
