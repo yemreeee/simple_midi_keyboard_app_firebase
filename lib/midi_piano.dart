@@ -323,7 +323,6 @@ class _MidiPianoState extends State<MidiPiano>
                     return transaction.update(documentReference, {
                       'note': midi,
                       'single_control': singleControl,
-                      'offset': _offset
                     });
                   }),
                 ))),
