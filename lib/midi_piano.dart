@@ -238,7 +238,7 @@ class _MidiPianoState extends State<MidiPiano>
                         singleControl = 1;
                         db.runTransaction((transaction) async => transaction
                                 .update(documentReference, {
-                              'offset': value.toString(),
+                              'offset': _offset.toString(),
                               'single_control': singleControl
                             }));
                       }
@@ -323,7 +323,7 @@ class _MidiPianoState extends State<MidiPiano>
                     return transaction.update(documentReference, {
                       'note': midi,
                       'single_control': singleControl,
-                      // 'offset': _offset.toString()
+                      'offset': _offset
                     });
                   }),
                 ))),
